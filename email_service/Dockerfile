@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm i -g npm \
+RUN npm i \
     && npm i --global nodemon
 
 COPY . .
