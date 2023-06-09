@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mongo:
+    container_name: mongo_server
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbit_server'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+
+  dipay-backend-test:
+    container_name: dipay_backend_test
+    build:
+      context: ./dipay-backend-test
+      dockerfile: Dockerfile
+    volumes:
+      - ./dipay-backend-test:/app
+    ports:
+      - 3030:3030
+    depends_on:
+      - mongo
+    restart: on-failure
+
+  email_service:
+    container_name: email_service
+    build:
+      context: ./email_service
+      dockerfile: Dockerfile
+    volumes:
+      - ./email_service:/app
+    ports:
+      - 3031:3031
+    restart: on-failure
+
+volumes:
+  mongodb:
