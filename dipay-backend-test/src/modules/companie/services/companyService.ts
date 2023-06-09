@@ -62,29 +62,28 @@ const updateStatus = async (params: any): Promise<CompanieeResponse> => {
     const filter = { _id: params.id };
     const update = { is_active: true };
     const options = { new: true };
-    const companieUpdate = await companies.findOneAndUpdate(filter, update, options);
 
-    if (companieUpdate !== null) {
-        if (companieUpdate.is_active) {
-            const response: CompanieeResponse = {
-                code: 400,
-                result: "null",
-                message: "Company is already active"
-            }
-
-            return response
-        } else {
-            const response: CompanieeResponse = {
-                code: 200,
-                result: {
-                    id: companieUpdate.id,
-                    is_active: companieUpdate.is_active,
-                },
-                message: "Success"
-            }
-
-            return response
+    const companie = await companies.findOne(filter)
+    if (companie?.is_active) {
+        const response: CompanieeResponse = {
+            code: 400,
+            result: "null",
+            message: "Company is already active"
         }
+
+        return response
+    } else if (!companie?.is_active) {
+        const companieUpdate = await companies.findOneAndUpdate(filter, update, options);
+        const response: CompanieeResponse = {
+            code: 200,
+            result: {
+                id: companieUpdate?.id,
+                is_active: companieUpdate?.is_active,
+            },
+            message: "Success"
+        }
+
+        return response
     } else {
         const response: CompanieeResponse = {
             code: 422,
@@ -94,7 +93,6 @@ const updateStatus = async (params: any): Promise<CompanieeResponse> => {
 
         return response
     }
-
 }
 
 export {
