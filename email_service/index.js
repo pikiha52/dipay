@@ -29,8 +29,7 @@ amqp.connect(rabbitUrl, function (error0, connection) {
         channel.consume(queue, function (payload) {
             if (payload != null) {
                 let contents = JSON.parse(payload.content)
-                console.log(contents);
-                // sendEmail(contents)
+                sendEmail(contents)
             }
         }, {
             noAck: true
@@ -40,17 +39,17 @@ amqp.connect(rabbitUrl, function (error0, connection) {
 
 async function sendEmail(params) {
     var transporter = nodemailer.createTransport({
-        host: "sandbox.smtp.mailtrap.io",
-        port: 2525,
+        host: process.env.EMAIL_HOST || "sandbox.smtp.mailtrap.io",
+        port: process.env.EMAIL_PORT || 2525,
         auth: {
-            user: "b19c929abe0e43",
-            pass: "674f29c2676df2"
+            user: process.env.EMAIL_USER || "b19c929abe0e43",
+            pass: process.env.EMAIL_PASS ||"674f29c2676df2",
         }
     });
 
     try {
         const mailOptions = {
-            from: 'pikiha52@gmail.com',
+            from: process.env.EMAIL_FORM || 'example@gmail.com',
             to: params.email,
             subject: params.subject,
             text: params.body
