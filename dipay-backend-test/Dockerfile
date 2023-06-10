@@ -10,4 +10,5 @@ RUN npm i \
 COPY . .
 
 CMD ["npm", "run", "dev"]
+
 EXPOSE 3030
