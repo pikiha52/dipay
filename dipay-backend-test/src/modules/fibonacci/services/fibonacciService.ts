@@ -16,11 +16,27 @@ export const indexService = (params: Fibonacci): FibonacciResponse<object> => {
     }
 
     if (filteredData.n === 1) {
-        // return [0]
+        const response: FibonacciResponse<object> = {
+            code: 200,
+            result: {
+                result: "0"
+            },
+            message: "Success."
+        }
+
+        return response
     }
 
     if (filteredData.n === 2) {
-        // return [0, 1]
+        const response: FibonacciResponse<object> = {
+            code: 200,
+            result: {
+                result: "0, 1"
+            },
+            message: "Success."
+        }
+
+        return response
     }
 
     const sequence = [0, 1]
