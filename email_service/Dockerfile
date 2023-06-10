@@ -9,5 +9,5 @@ RUN npm i \
 
 COPY . .
 
-CMD sleep 15 && npm run dev
+CMD sleep 20 && npm run dev
 EXPOSE 3031

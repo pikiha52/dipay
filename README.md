@@ -2,6 +2,16 @@
 ## 🚀 First Clone (Recomendation use Docker)
 
 ## With docker
+  - Run command on terminal dipay-backend-test
+
+    ```bash
+    npm i 
+    ```
+  - Run command on terminal email_service
+
+    ```bash
+    npm i
+    ```
   - Run comand on terminal directory 
 
     ```bash
