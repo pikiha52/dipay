@@ -13,12 +13,9 @@ dotenv.config()
 const port: any = process.env.APP_PORT || 3030;
 
 const app: Express = express();
-const mongoUrl: string = process.env.MONGO_URL || "mongodb://localhost:27017/dipayDB"
+const mongoUri: string = process.env.MONGO_URL || "mongodb://localhost:27017/dipayDB"
 
-mongoose.connect(mongoUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoUri);
 
 const db: Connection = mongoose.connection;
 db.on("error", (error) => console.log(error));
